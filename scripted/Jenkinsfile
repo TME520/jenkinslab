@@ -2,15 +2,16 @@ node {
     stage('One: check workspace'){
         // Stage one of a scripted Jenkins pipeline
         echo 'Stage one starting...'
-        echo 'This is build number $currentBuild.number.'
+        // echo 'This is build number $currentBuild.number.'
         echo "This is build number $currentBuild.number."
-        echo 'This is build number ${currentBuild.number}.'
+        // echo 'This is build number ${currentBuild.number}.'
         echo "This is build number ${currentBuild.number}."
-        echo 'This is build number currentBuild.number'
-        echo "This is build number currentBuild.number"
-        echo currentBuild.number
-        echo 'Your favorite singer is $params.favorite_singer.'
-        echo 'Workspace: $WORKSPACE'
+        // echo 'This is build number currentBuild.number'
+        // echo "This is build number currentBuild.number"
+        // echo currentBuild.number
+        echo "Your favorite singer is ${params.favorite_singer}."
+        echo "Your favorite singer is $params.favorite_singer."
+        echo "Workspace: $WORKSPACE"
         echo 'Current directory:'
         pwd() 
         echo 'Stage one ending...'
