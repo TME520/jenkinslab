@@ -33,7 +33,7 @@ node {
         if (isUnix()) {
             echo "This pipeline is running on a UNIX-like node."
         }
-        if (pwd() == $WORKSPACE) {
+        if (pwd() == ${WORKSPACE}) {
             echo "Current directory is Workspace."
         }
         echo "Stage three ending..."
