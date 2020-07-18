@@ -1,7 +1,7 @@
 node {
     stage('One: check workspace'){
         // Stage one of a scripted Jenkins pipeline
-        echo 'Stage one starting...'
+        echo "Stage one starting..."
         // echo 'This is build number $currentBuild.number.'
         echo "This is build number $currentBuild.number."
         // echo 'This is build number ${currentBuild.number}.'
@@ -14,22 +14,22 @@ node {
         echo "Workspace: $WORKSPACE"
         echo 'Current directory:'
         pwd() 
-        echo 'Stage one ending...'
+        echo "Stage one ending..."
     }
-    stage('Two: 1st pet name input'){
+    stage('Two: keep running ?'){
         // Stage two of a scripted Jenkins pipeline
-        echo 'Stage two starting...'
+        echo "Stage two starting..."
         input message: 'Keep going ?', ok: 'Yes, keep running this pipeline.'
-        echo 'Stage two ending...'
+        echo "Stage two ending..."
     }
     stage('Three'){
         // Stage three of a scripted Jenkins pipeline
-        echo 'Stage three starting...'
+        echo "Stage three starting..."
         if (params.favorite_singer == 'Lady Gaga') {
-            echo 'Oh, I see you like Lady Gaga...'
+            echo "Oh, I see you like Lady Gaga..."
         } else {
-            echo 'I also like ${params.favorite_singer}'
+            echo "I also like ${params.favorite_singer}"
         }
-        echo 'Stage three ending...'
+        echo "Stage three ending..."
     }
 }
