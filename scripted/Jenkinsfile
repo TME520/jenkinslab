@@ -19,7 +19,7 @@ node {
     stage('Two: 1st pet name input'){
         // Stage two of a scripted Jenkins pipeline
         echo 'Stage two starting...'
-        input message: 'What\'s your 1st pet name ?', ok: 'Validate'
+        input message: 'Keep going ?', ok: 'Yes, keep running this pipeline.'
         echo 'Stage two ending...'
     }
     stage('Three'){
