@@ -1,5 +1,5 @@
 node {
-    stage('One: check workspace'){
+    stage('One: Variables'){
         // Stage one of a scripted Jenkins pipeline
         echo "Stage one starting..."
         // echo 'This is build number $currentBuild.number.'
@@ -16,19 +16,22 @@ node {
         pwd() 
         echo "Stage one ending..."
     }
-    stage('Two: keep running ?'){
+    stage('Two: Deployment validation'){
         // Stage two of a scripted Jenkins pipeline
         echo "Stage two starting..."
         input message: 'Keep going ?', ok: 'Yes, keep running this pipeline.'
         echo "Stage two ending..."
     }
-    stage('Three'){
+    stage('Three: Conditions'){
         // Stage three of a scripted Jenkins pipeline
         echo "Stage three starting..."
         if (params.favorite_singer == 'Lady Gaga') {
             echo "Oh, I see you like Lady Gaga..."
         } else {
             echo "I also like ${params.favorite_singer}"
+        }
+        if (isUnix()) {
+            echo "This pipeline is running on a UNIX-like node."
         }
         echo "Stage three ending..."
     }
