@@ -52,7 +52,7 @@ node {
         // Stage four of a scripted Jenkins pipeline
         echo "Stage four starting..."
         dir("Life Simulator")
-        // git credentialsId: 'c0d66b24-e928-45f3-8da2-0b3f960ca800', poll: false, url: 'https://github.com/TME520/lifesim.git'
+        pwd()
         echo "Stage four ending..."
     }
     stage('Five: AWS CLI') {
