@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+    stages {
+        stage('Cleanup') {
+            steps {
+                deleteDir()
+            }
+        }
+        stage('Retrieve CFN template') {
+            steps {
+                dir('cfn') {
+                    echo "Switched to cfn folder"
+                    git changelog: false, credentialsId: 'c0d66b24-e928-45f3-8da2-0b3f960ca800', poll: false, url: 'https://github.com/TME520/cloudformation.git'
+                }
+            }
+        }
+        stage('Create stack') {
+            steps {
+                echo "Creating the stack"
+                sh label: '', returnStdout: true, script: 'aws cloudformation create-stack --stack-name Michel --template-url aws cloudformation create-stack --stack-name Michel --template-url https://cf-templates-w4ea9ebnhuyx-ap-southeast-2.s3-ap-southeast-2.amazonaws.com/singleEC2.json'
+            }
+        }
+    }
+}
