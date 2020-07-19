@@ -22,8 +22,6 @@ node {
         echo "Your favorite singer is ${params.favorite_singer}."
         echo "Your favorite singer is $params.favorite_singer."
         echo "Workspace: $WORKSPACE"
-        echo 'Current directory:'
-        pwd() 
         echo "Stage one ending..."
     }
     stage('Two: Deployment validation'){
@@ -51,7 +49,7 @@ node {
     stage('Four: GIT') {
         // Stage four of a scripted Jenkins pipeline
         echo "Stage four starting..."
-        dir("Life Simulator")
+        // dir("Life Simulator")
         pwd()
         echo "Stage four ending..."
     }
