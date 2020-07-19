@@ -50,12 +50,16 @@ node {
     }
     stage('Four: GIT') {
         // Stage four of a scripted Jenkins pipeline
+        echo "Stage four starting..."
         dir("Life Simulator")
         // git credentialsId: 'c0d66b24-e928-45f3-8da2-0b3f960ca800', poll: false, url: 'https://github.com/TME520/lifesim.git'
+        echo "Stage four ending..."
     }
     stage('Five: AWS CLI') {
         // Stage five of a scripted Jenkins pipeline
+        echo "Stage five starting..."
         dir(env.WORKSPACE)
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: '411e79d0-00f9-4be4-babb-c26fac151e88', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY']]) { AWS("--region=ap-southeast-2 s3 ls") }
+        echo "Stage five ending..."
     }
 }
