@@ -1,4 +1,12 @@
 node {
+    stage('Zero: Clean workspace') {
+        def status = ""
+        try {
+            deleteDir()
+        } catch(e) {
+            status = "${e.message}"
+        }
+    }
     stage('One: Variables'){
         // Stage one of a scripted Jenkins pipeline
         echo "Stage one starting..."
