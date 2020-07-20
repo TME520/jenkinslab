@@ -34,9 +34,6 @@ pipeline {
         stage('Monitor stack creation') {
             steps {
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: '411e79d0-00f9-4be4-babb-c26fac151e88', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY']]) { AWS("--region=ap-southeast-2 cloudformation wait stack-create-complete --stack-name ${params.stack_name}") }
-                catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
-                    sh "echo \"Stack creation failed.\" && exit 1"
-                }
             }
         }
     }
