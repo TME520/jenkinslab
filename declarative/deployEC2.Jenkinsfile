@@ -39,7 +39,6 @@ pipeline {
         stage('Clean workspace') {
             steps {
                 cleanWs notFailBuild: true
-                mail bcc: '', body: 'Not much there, hope this email was sent properly.', cc: '', from: '', replyTo: '', subject: 'Hello from Jenkins (local)', to: 'tme@mail.com'
             }
         }
     }
