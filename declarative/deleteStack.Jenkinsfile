@@ -8,7 +8,7 @@ pipeline {
                 deleteDir()
             }
         }
-        stage('Create stack') {
+        stage('Delete stack') {
             steps {
                 echo "Deleting the stack"
                 echo "Stack name: ${params.stack_name}"
