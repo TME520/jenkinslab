@@ -62,4 +62,14 @@ node {
         }
         echo "Stage five ending..."
     }
+    stage('Six: Shell commands') {
+        echo "Stage six starting..."
+        sh """
+        echo 'Alpha, Beta, Gamma'
+        uptime
+        ls -lisa
+        df -h
+        """
+        echo "Stage six ending..."
+    }
 }
