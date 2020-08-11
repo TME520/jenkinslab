@@ -33,6 +33,9 @@ pipeline {
                 script {
                     def cfn_params_file = readFile(file: 'cloudformation/params/p7_default.json')
                     println(cfn_params_file)
+                    new File("cloudformation/params/p7_default.json").eachLine { line ->
+                        println line
+                    }
                 }
             }
         }
@@ -51,6 +54,11 @@ pipeline {
         stage('Clean workspace') {
             steps {
                 cleanWs notFailBuild: true
+            }
+        }
+        post {
+            failure {
+                echo "last_started: $last_started"
             }
         }
     }
