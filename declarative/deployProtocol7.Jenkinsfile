@@ -32,6 +32,7 @@ pipeline {
             steps {
                 script {
                     def cfn_params_file = readFile('${WORKSPACE}/cloudformation/params/p7-default.json')
+                    println(cfn_params_file)
                 }
             }
         }
