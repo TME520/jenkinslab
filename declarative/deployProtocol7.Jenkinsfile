@@ -31,7 +31,7 @@ pipeline {
         stage('Check parameters file for CFN') {
             steps {
                 script {
-                    def cfn_params_file = readFile('${WORKSPACE}/cloudformation/params/p7_default.json')
+                    def cfn_params_file = readFile(file: 'cloudformation/params/p7_default.json')
                     println(cfn_params_file)
                 }
             }
