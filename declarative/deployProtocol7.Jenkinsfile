@@ -30,9 +30,7 @@ pipeline {
         }
         stage('Check parameters file for CFN') {
             steps {
-                new File('${WORKSPACE}/cloudformation/params/p7_default.json').eachLine {
-                    line -> println line
-                }
+                cfn_params_file = readFile('${WORKSPACE}/cloudformation/params/p7-default.json')
             }
         }
         stage('Create stack') {
