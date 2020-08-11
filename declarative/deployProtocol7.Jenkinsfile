@@ -56,10 +56,10 @@ pipeline {
                 cleanWs notFailBuild: true
             }
         }
-        post {
-            failure {
-                echo "last_started: $last_started"
-            }
+    }
+    post {
+        failure {
+            echo "last_started: $last_started"
         }
     }
 }
