@@ -28,6 +28,13 @@ pipeline {
                 echo "...done with validation."
             }
         }
+        stage('Check parameters file for CFN') {
+            steps {
+                new File('${WORKSPACE}/cloudformation/params/p7_default.json').eachLine {
+                    line -> println line
+                }
+            }
+        }
         stage('Create stack') {
             steps {
                 echo "Creating the stack"
