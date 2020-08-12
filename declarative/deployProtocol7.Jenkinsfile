@@ -28,28 +28,7 @@ pipeline {
                 echo "...done with validation."
             }
         }
-        stage('Check CFN params file before change') {
-            steps {
-                script {
-                    def cfn_params_file = readFile(file: 'cloudformation/params/p7_default.json')
-                    println(cfn_params_file)
-                }
-            }
-        }
-        stage('CFN params file generation') {
-            steps {
-                script {
-                    echo "Customizing CFN params file..."
-                    sh label: '', script: '''
-                    sed -i \'s/SED001/${params.p7_instance_name}/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED002/${params.p7_instance_client}/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED003/${params.p7_instance_env}/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED004/${params.p7_instance_project}/g\' ./cloudformation/params/p7_default.json
-                    '''
-                }
-            }
-        }
-        stage('Check CFN params file after change') {
+        stage('Check CFN params file') {
             steps {
                 script {
                     def cfn_params_file = readFile(file: 'cloudformation/params/p7_default.json')
