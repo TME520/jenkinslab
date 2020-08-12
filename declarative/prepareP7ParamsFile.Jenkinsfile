@@ -25,6 +25,10 @@ pipeline {
             }
         }
         stage('Find my external IP') {
+            when {
+                beforeAgent true
+                expression { params.authorized_ip == '' }
+            }
             steps {
                 script {
                     def external_ip = sh(script: 'curl ifconfig.me', returnStdout: true)
