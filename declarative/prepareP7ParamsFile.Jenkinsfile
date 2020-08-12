@@ -3,10 +3,10 @@
 pipeline {
     agent any
     environment {
-        p7_instance_name=${params.p7_instance_name}
-        p7_instance_client=${params.p7_instance_client}
-        p7_instance_env=${params.p7_instance_env}
-        p7_instance_project=${params.p7_instance_project}
+        p7_instance_name="${params.p7_instance_name}"
+        p7_instance_client="${params.p7_instance_client}"
+        p7_instance_env="${params.p7_instance_env}"
+        p7_instance_project="${params.p7_instance_project}"
     }
     stages {
         stage('Cleanup') {
