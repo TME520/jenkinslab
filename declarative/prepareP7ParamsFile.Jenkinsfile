@@ -40,7 +40,7 @@ pipeline {
                     sed -i \'s/SED009/''' + params.nt_api_password + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED010/''' + params.azure_devops_pat + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED011/''' + params.sumo_endpoint + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s=SED012=http://''' + params.dynamodb_url + '''=g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s,SED012,http://''' + params.dynamodb_url + ''',g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED013/''' + params.chatbotone_data_folder + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED014/''' + params.dashboard_filename + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED015/''' + params.advanced_dashboard_filename + '''/g\' ./cloudformation/params/p7_default.json
