@@ -35,7 +35,7 @@ pipeline {
         stage('Find my external IP') {
             when {
                 beforeAgent true
-                expression { external_ip == '' }
+                expression { external_ip != '' }
             }
             steps {
                 script {
