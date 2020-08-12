@@ -8,6 +8,11 @@ pipeline {
                 deleteDir()
             }
         }
+        stage('Preparation') {
+            steps {
+                def external_ip = params.authorized_ip
+            }
+        }
         stage('Retrieve CFN template') {
             steps {
                 dir('cloudformation') {
@@ -27,13 +32,12 @@ pipeline {
         stage('Find my external IP') {
             when {
                 beforeAgent true
-                expression { params.authorized_ip == '' }
+                expression { external_ip == '' }
             }
             steps {
                 script {
-                    def external_ip = sh(script: 'curl ifconfig.me', returnStdout: true)
+                    external_ip = sh(script: 'curl ifconfig.me', returnStdout: true)
                     println external_ip
-                    setParam("authorized_ip", external_ip)
                 }
             }
         }
@@ -69,7 +73,7 @@ pipeline {
                     sed -i \'s/SED025/''' + params.enable_sumologic + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED026/''' + params.enable_dashboard + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED027/''' + params.stack_name + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s,SED028,''' + params.authorized_ip + ''',g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s,SED028,''' + external_ip + ''',g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED029/''' + params.hosted_zone_name + '''/g\' ./cloudformation/params/p7_default.json
                     '''
                 }
