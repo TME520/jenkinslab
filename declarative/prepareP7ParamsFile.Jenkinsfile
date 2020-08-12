@@ -8,14 +8,6 @@ pipeline {
                 deleteDir()
             }
         }
-        stage('Preparation') {
-            steps {
-                script {
-                    def external_ip = params.authorized_ip
-                    println external_ip
-                }
-            }
-        }
         stage('Retrieve CFN template') {
             steps {
                 dir('cloudformation') {
@@ -32,15 +24,27 @@ pipeline {
                 }
             }
         }
+        stage('Use manually defined external IP') {
+            when {
+                beforeAgent true
+                expression { params.authorized_ip != '' }
+            }
+            steps {
+                script {
+                    sh "sed -i \'s,SED028," + params.authorized_ip + ",g\' ./cloudformation/params/p7_default.json"
+                }
+            }
+        }
         stage('Find my external IP') {
             when {
                 beforeAgent true
-                expression { external_ip != '' }
+                expression { params.authorized_ip == '' }
             }
             steps {
                 script {
                     external_ip = sh(script: 'curl ifconfig.me', returnStdout: true)
                     println external_ip
+                    sh "sed -i \'s,SED028," + external_ip + ",g\' ./cloudformation/params/p7_default.json"
                 }
             }
         }
@@ -76,7 +80,6 @@ pipeline {
                     sed -i \'s/SED025/''' + params.enable_sumologic + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED026/''' + params.enable_dashboard + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED027/''' + params.stack_name + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s,SED028,''' + external_ip + ''',g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED029/''' + params.hosted_zone_name + '''/g\' ./cloudformation/params/p7_default.json
                     '''
                 }
