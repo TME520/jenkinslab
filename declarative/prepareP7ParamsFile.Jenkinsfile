@@ -26,8 +26,10 @@ pipeline {
         }
         stage('Find my external IP') {
             steps {
-                def external_ip = sh(script: 'curl ifconfig.me', returnStdout: true)
-                println external_ip
+                script {
+                    def external_ip = sh(script: 'curl ifconfig.me', returnStdout: true)
+                    println external_ip
+                }
             }
         }
         stage('CFN params file generation') {
