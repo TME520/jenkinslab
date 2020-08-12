@@ -12,6 +12,7 @@ pipeline {
             steps {
                 script {
                     def external_ip = params.authorized_ip
+                    println external_ip
                 }
             }
         }
