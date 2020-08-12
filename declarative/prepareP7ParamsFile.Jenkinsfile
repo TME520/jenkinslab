@@ -10,7 +10,9 @@ pipeline {
         }
         stage('Preparation') {
             steps {
-                def external_ip = params.authorized_ip
+                script {
+                    def external_ip = params.authorized_ip
+                }
             }
         }
         stage('Retrieve CFN template') {
