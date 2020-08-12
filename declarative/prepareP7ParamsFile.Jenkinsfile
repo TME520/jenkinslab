@@ -27,13 +27,13 @@ pipeline {
         stage('CFN params file generation') {
             steps {
                 echo "${params.p7_instance_name} // ${params.p7_instance_client} // ${params.p7_instance_env} // ${params.p7_instance_project}"
-                sh " echo ${params.p7_instance_name}"
+                sh "echo ${params.p7_instance_name}"
                 sh "sed -i \'s/SED001/${params.p7_instance_name}/g\' ./cloudformation/params/p7_default.json"
                 script {
                     sh "sed -i \'s/SED001/\${params.p7_instance_name}/g\' ./cloudformation/params/p7_default.json"
                     echo "Customizing CFN params file..."
                     sh label: '', script: '''
-                    echo 'params.p7_instance_name: ${params.p7_instance_name} (\${params.p7_instance_name})'
+                    echo "params.p7_instance_name: ${params.p7_instance_name} (\${params.p7_instance_name})"
                     sed -i \'s/SED001/\${params.p7_instance_name}/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED002/\${params.p7_instance_client}/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED003/\${params.p7_instance_env}/g\' ./cloudformation/params/p7_default.json
