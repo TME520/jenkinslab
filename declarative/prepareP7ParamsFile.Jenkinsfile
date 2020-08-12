@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Find my external IP') {
             steps {
-                def external_ip = sh "curl ifconfig.me"
+                external_ip = sh "curl ifconfig.me"
                 echo "Your external IP address is ${external_ip}"
             }
         }
