@@ -33,6 +33,7 @@ pipeline {
                 script {
                     def external_ip = sh(script: 'curl ifconfig.me', returnStdout: true)
                     println external_ip
+                    params.authorized_ip=external_ip
                 }
             }
         }
