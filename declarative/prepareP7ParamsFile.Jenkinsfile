@@ -56,7 +56,7 @@ pipeline {
                     sed -i \'s/SED025/''' + params.enable_sumologic + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED026/''' + params.enable_dashboard + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED027/''' + params.stack_name + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED028/''' + params.authorized_ip + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s,SED028,''' + params.authorized_ip + ''',g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED029/''' + params.hosted_zone_name + '''/g\' ./cloudformation/params/p7_default.json
                     '''
                 }
@@ -72,7 +72,7 @@ pipeline {
         }
         stage('Sync CFN params file with S3') {
             steps {
-                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: '411e79d0-00f9-4be4-babb-c26fac151e88', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY']]) { AWS("--region=ap-southeast-2 s3 sync --exclude '*' --exclude 'params' --include '*.json' ${WORKSPACE}/cloudformation/ s3://cf-templates-w4ea9ebnhuyx-ap-southeast-2/") }
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: '411e79d0-00f9-4be4-babb-c26fac151e88', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY']]) { AWS("--region=ap-southeast-2 s3 sync --exclude '*' --include 'p7_default.json' ${WORKSPACE}/cloudformation/ s3://cf-templates-w4ea9ebnhuyx-ap-southeast-2/") }
             }
         }
     }
