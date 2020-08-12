@@ -2,6 +2,12 @@
 
 pipeline {
     agent any
+    environment {
+        p7_instance_name=${params.p7_instance_name}
+        p7_instance_client=${params.p7_instance_client}
+        p7_instance_env=${params.p7_instance_env}
+        p7_instance_project=${params.p7_instance_project}
+    }
     stages {
         stage('Cleanup') {
             steps {
@@ -29,10 +35,10 @@ pipeline {
                 script {
                     echo "Customizing CFN params file..."
                     sh label: '', script: '''
-                    sed -i \'s/SED001/$params.p7_instance_name/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED002/$params.p7_instance_client/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED003/$params.p7_instance_env/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED004/$params.p7_instance_project/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED001/$p7_instance_name/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED002/$p7_instance_client/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED003/$p7_instance_env/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED004/$p7_instance_project/g\' ./cloudformation/params/p7_default.json
                     '''
                 }
             }
