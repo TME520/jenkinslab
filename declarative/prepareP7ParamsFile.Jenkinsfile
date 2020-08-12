@@ -28,7 +28,7 @@ pipeline {
             steps {
                 echo "${params.p7_instance_name} // ${params.p7_instance_client} // ${params.p7_instance_env} // ${params.p7_instance_project}"
                 sh "echo ${params.p7_instance_name}"
-                sh "sed -i \'s/SED001/\"${params.p7_instance_name}\"/g\' ./cloudformation/params/p7_default.json"
+                sh "sed -i \'s/SED001/" + ${params.p7_instance_name} + "/g\' ./cloudformation/params/p7_default.json"
                 script {
                     sh "sed -i \'s/SED001/\${params.p7_instance_name}/g\' ./cloudformation/params/p7_default.json"
                     echo "Customizing CFN params file..."
