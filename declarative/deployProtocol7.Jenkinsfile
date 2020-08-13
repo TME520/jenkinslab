@@ -10,7 +10,7 @@ pipeline {
         }
         stage('Retrieve artifact: p7_default.json') {
             steps {
-                copyArtifacts filter: 'p7_default.json', fingerprintArtifacts: true, projectName: 'prepareP7ParamsFile'
+                copyArtifacts filter: 'cloudformation/params/p7_default.json', fingerprintArtifacts: true, projectName: 'prepareP7ParamsFile'
             }
         }
         stage('Retrieve CFN template') {
@@ -49,11 +49,6 @@ pipeline {
             steps {
                 cleanWs notFailBuild: true
             }
-        }
-    }
-    post {
-        failure {
-            echo "last_started: $last_started"
         }
     }
 }
