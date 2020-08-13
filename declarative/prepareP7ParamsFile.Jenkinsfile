@@ -44,7 +44,7 @@ pipeline {
                 script {
                     external_ip = sh(script: 'curl ifconfig.me', returnStdout: true)
                     println external_ip
-                    sh "sed -i \'s,SED028," + external_ip + ",g\' ./cloudformation/params/p7_default.json"
+                    sh "sed -i \'s,SED028," + external_ip + "/0,g\' ./cloudformation/params/p7_default.json"
                 }
             }
         }
