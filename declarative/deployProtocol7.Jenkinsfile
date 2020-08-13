@@ -8,18 +8,18 @@ pipeline {
                 deleteDir()
             }
         }
-        stage('Retrieve artifact: p7_default.json') {
-            steps {
-                copyArtifacts filter: 'cloudformation/params/p7_default.json', fingerprintArtifacts: true, projectName: 'prepareP7ParamsFile'
-                sh "cat cloudformation/params/p7_default.json"
-            }
-        }
         stage('Retrieve CFN template') {
             steps {
                 dir('cloudformation') {
                     git changelog: false, credentialsId: 'c0d66b24-e928-45f3-8da2-0b3f960ca800', poll: false, url: 'https://github.com/TME520/cloudformation.git'
                     echo "GIT clone success check: all right !"
                 }
+            }
+        }
+        stage('Retrieve artifact: p7_default.json') {
+            steps {
+                copyArtifacts filter: 'cloudformation/params/p7_default.json', fingerprintArtifacts: true, projectName: 'prepareP7ParamsFile'
+                sh "cat cloudformation/params/p7_default.json"
             }
         }
         stage('Sync CFN template with S3') {
