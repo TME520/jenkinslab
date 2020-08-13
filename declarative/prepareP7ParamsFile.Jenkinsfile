@@ -98,6 +98,11 @@ pipeline {
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: '411e79d0-00f9-4be4-babb-c26fac151e88', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY']]) { AWS("--version") }
             }
         }
+        stage('Save artifact: p7_default.json') {
+            steps {
+                archiveArtifacts artifacts: 'cloudformation/params/p7_default.json', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true
+            }
+        }
         stage('Sync CFN params file with S3') {
             steps {
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: '411e79d0-00f9-4be4-babb-c26fac151e88', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY']]) { AWS("--region=ap-southeast-2 s3 sync --exclude '*' --include 'p7_default.json' ${WORKSPACE}/cloudformation/params/ s3://cf-templates-w4ea9ebnhuyx-ap-southeast-2/") }

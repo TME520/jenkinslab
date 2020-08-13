@@ -8,6 +8,11 @@ pipeline {
                 deleteDir()
             }
         }
+        stage('Retrieve artifact: p7_default.json') {
+            steps {
+                copyArtifacts filter: 'p7_default.json', fingerprintArtifacts: true, projectName: 'prepareP7ParamsFile'
+            }
+        }
         stage('Retrieve CFN template') {
             steps {
                 dir('cloudformation') {
