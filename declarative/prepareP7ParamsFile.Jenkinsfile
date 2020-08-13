@@ -27,24 +27,24 @@ pipeline {
         stage('Use manually defined external IP') {
             when {
                 beforeAgent true
-                expression { params.authorized_ip != '' }
+                expression { params.authorized-ip != '' }
             }
             steps {
                 script {
-                    sh "sed -i \'s,SED028," + params.authorized_ip + ",g\' ./cloudformation/params/p7_default.json"
+                    sh "sed -i \'s,SED028," + params.authorized-ip + ",g\' ./cloudformation/params/p7_default.json"
                 }
             }
         }
         stage('Find my external IP') {
             when {
                 beforeAgent true
-                expression { params.authorized_ip == '' }
+                expression { params.authorized-ip == '' }
             }
             steps {
                 script {
-                    external_ip = sh(script: 'curl ifconfig.me', returnStdout: true)
-                    println external_ip
-                    sh "sed -i \'s,SED028," + external_ip + ",g\' ./cloudformation/params/p7_default.json"
+                    external-ip = sh(script: 'curl ifconfig.me', returnStdout: true)
+                    println external-ip
+                    sh "sed -i \'s,SED028," + external-ip + ",g\' ./cloudformation/params/p7_default.json"
                 }
             }
         }
@@ -53,34 +53,34 @@ pipeline {
                 script {
                     echo "Customizing CFN params file..."
                     sh label: '', script: '''
-                    sed -i \'s/SED001/''' + params.p7_instance_name + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED002/''' + params.p7_instance_client + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED003/''' + params.p7_instance_env + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED004/''' + params.p7_instance_project + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED005/''' + params.slack_token + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED006/''' + params.azure_storage_account_name + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED007/''' + params.azure_storage_account_key + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED008/''' + params.nt_api_user + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED009/''' + params.nt_api_password + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED010/''' + params.azure_devops_pat + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED011/''' + params.sumo_endpoint + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s,SED012,http://''' + params.dynamodb_url + ''',g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s,SED013,''' + params.chatbotone_data_folder + ''',g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED014/''' + params.dashboard_filename + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED015/''' + params.advanced_dashboard_filename + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED016/''' + params.dashboard_base_url + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED017/''' + params.azure_devops_url + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s,SED018,''' + params.logs_folder + ''',g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED019/''' + params.log_filename + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED020/''' + params.config_filename + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED021/''' + params.nt_api_search_url + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED022/''' + params.nt_api_login_url + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED023/''' + params.enable_blinkstick + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED024/''' + params.enable_slack + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED025/''' + params.enable_sumologic + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED026/''' + params.enable_dashboard + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED027/''' + params.stack_name + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED029/''' + params.hosted_zone_name + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED001/''' + params.p7-instance-name + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED002/''' + params.p7-instance-client + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED003/''' + params.p7-instance-env + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED004/''' + params.p7-instance-project + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED005/''' + params.slack-token + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED006/''' + params.azure-storage-account-name + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED007/''' + params.azure-storage-account-key + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED008/''' + params.nt-api-user + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED009/''' + params.nt-api-password + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED010/''' + params.azure-devops-pat + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED011/''' + params.sumo-endpoint + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s,SED012,http://''' + params.dynamodb-url + ''',g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s,SED013,''' + params.chatbotone-data-folder + ''',g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED014/''' + params.dashboard-filename + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED015/''' + params.advanced-dashboard-filename + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED016/''' + params.dashboard-base-url + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED017/''' + params.azure-devops-url + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s,SED018,''' + params.logs-folder + ''',g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED019/''' + params.log-filename + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED020/''' + params.config-filename + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED021/''' + params.nt-api-search-url + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED022/''' + params.nt-api-login-url + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED023/''' + params.enable-blinkstick + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED024/''' + params.enable-slack + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED025/''' + params.enable-sumologic + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED026/''' + params.enable-dashboard + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED027/''' + params.stack-name + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED029/''' + params.hosted-zone-name + '''/g\' ./cloudformation/params/p7_default.json
                     '''
                 }
             }
