@@ -51,13 +51,13 @@ pipeline {
         stage('CFN params file generation') {
             environment {
                 SLACK_TOKEN = credentials('slack_token')
+                SUMO_ENDPOINT = credentials('sumo_endpoint')
+                MEGO = credentials(params.slack_token)
             }
             steps {
                 script {
                     echo "Customizing CFN params file..."
-                    println 'SLACK_TOKEN (from credentials function)' + SLACK_TOKEN
-                    sh "echo 'Slack token (lowercase): $slack_token'"
-                    sh "echo 'Slack token (from params): params.slack_token'"
+                    println 'MEGO:' + MEGO
                     sh label: '', script: '''
                     sed -i \'s/SED001/''' + params.p7_instance_name + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED002/''' + params.p7_instance_client + '''/g\' ./cloudformation/params/p7_default.json
@@ -69,7 +69,7 @@ pipeline {
                     sed -i \'s/SED008/''' + params.nt_api_user + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED009/''' + params.nt_api_password + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED010/''' + params.azure_devops_pat + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED011/''' + params.sumo_endpoint + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED011/''' + SUMO_ENDPOINT + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s,SED012,http://''' + params.dynamodb_url + ''',g\' ./cloudformation/params/p7_default.json
                     sed -i \'s,SED013,''' + params.chatbotone_data_folder + ''',g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED014/''' + params.dashboard_filename + '''/g\' ./cloudformation/params/p7_default.json
