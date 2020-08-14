@@ -57,13 +57,13 @@ pipeline {
                     sed -i \'s/SED002/''' + params.p7_instance_client + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED003/''' + params.p7_instance_env + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED004/''' + params.p7_instance_project + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED005/''' + env.slack_token + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED005/''' + slack_token + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED006/''' + params.azure_storage_account_name + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED007/''' + params.azure_storage_account_key + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED008/''' + params.nt_api_user + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED009/''' + params.nt_api_password + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED010/''' + params.azure_devops_pat + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED011/''' + env.sumo_endpoint + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED011/''' + sumo_endpoint + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s,SED012,http://''' + params.dynamodb_url + ''',g\' ./cloudformation/params/p7_default.json
                     sed -i \'s,SED013,''' + params.chatbotone_data_folder + ''',g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED014/''' + params.dashboard_filename + '''/g\' ./cloudformation/params/p7_default.json
