@@ -63,7 +63,7 @@ pipeline {
                     sed -i \'s/SED002/''' + params.p7_instance_client + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED003/''' + params.p7_instance_env + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED004/''' + params.p7_instance_project + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED005/''' + params.slack_token + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED005/''' + SLACK_TOKEN + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED006/''' + params.azure_storage_account_name + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED007/''' + params.azure_storage_account_key + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED008/''' + params.nt_api_user + '''/g\' ./cloudformation/params/p7_default.json
