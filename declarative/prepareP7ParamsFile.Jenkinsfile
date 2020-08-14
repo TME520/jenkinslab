@@ -52,7 +52,6 @@ pipeline {
             environment {
                 SLACK_TOKEN = credentials('slack_token')
                 SUMO_ENDPOINT = credentials('sumo_endpoint')
-                MEGO = credentials(params.slack_token)
             }
             steps {
                 script {
