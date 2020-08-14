@@ -52,6 +52,7 @@ pipeline {
             steps {
                 script {
                     echo "Customizing CFN params file..."
+                    sh "echo Slack token: $slack_token"
                     sh label: '', script: '''
                     sed -i \'s/SED001/''' + params.p7_instance_name + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED002/''' + params.p7_instance_client + '''/g\' ./cloudformation/params/p7_default.json
