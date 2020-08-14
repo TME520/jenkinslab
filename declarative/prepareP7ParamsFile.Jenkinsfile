@@ -49,6 +49,9 @@ pipeline {
             }
         }
         stage('CFN params file generation') {
+            environment {
+                SLACK_TOKEN = credentials(slack_token)
+            }
             steps {
                 script {
                     echo "Customizing CFN params file..."
