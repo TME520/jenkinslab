@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Retrieve artifact: p7_default.json') {
             steps {
-                copyArtifacts filter: 'cloudformation/params/p7_default.json', fingerprintArtifacts: true, projectName: 'prepareP7ParamsFile'
+                copyArtifacts filter: 'cloudformation/params/p7_default.json', fingerprintArtifacts: true, projectName: 'prepareP7ParamsFile', selector: upstream()
                 sh "cat cloudformation/params/p7_default.json"
             }
         }
