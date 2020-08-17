@@ -112,5 +112,10 @@ pipeline {
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: '411e79d0-00f9-4be4-babb-c26fac151e88', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY']]) { AWS("--region=ap-southeast-2 s3 sync --exclude '*' --include 'p7_default.json' ${WORKSPACE}/cloudformation/params/ s3://cf-templates-w4ea9ebnhuyx-ap-southeast-2/") }
             }
         }
+        stage('Start deployment of P7') {
+            steps {
+                build job: 'deployProtocol7', parameters: [string(name: 'stack_name', value: params.stack_name)], quietPeriod: 3
+            }
+        }
     }
 }
