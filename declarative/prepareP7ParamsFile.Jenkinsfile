@@ -57,7 +57,7 @@ pipeline {
             steps {
                 script {
                     echo "Customizing CFN params file..."
-                    echo "AWS secret key data: AWS_SECRET_KEY_DATA"
+                    echo "AWS secret key data: " + AWS_SECRET_KEY_DATA
                     sh label: '', script: '''
                     sed -i \'s/SED001/''' + params.p7_instance_name + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED002/''' + params.p7_instance_client + '''/g\' ./cloudformation/params/p7_default.json
