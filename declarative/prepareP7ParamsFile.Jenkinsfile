@@ -53,6 +53,8 @@ pipeline {
                 SLACK_TOKEN = credentials('slack_token')
                 SUMO_ENDPOINT = credentials('sumo_endpoint')
                 AWS_SECRET_KEY_DATA = credentials('aws_access_key')
+                def (value1, value2) = AWS_SECRET_KEY_DATA.tokenize( ':' )
+                println value1
             }
             steps {
                 script {
