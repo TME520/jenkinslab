@@ -58,8 +58,7 @@ pipeline {
                 script {
                     echo "Customizing CFN params file..."
                     echo "AWS secret key data: " + AWS_SECRET_KEY_DATA
-                    def (value1, value2) = AWS_SECRET_KEY_DATA.tokenize( ':' )
-                    println value1
+                    def (aws_access_key_id, aws_secret_access_key) = AWS_SECRET_KEY_DATA.tokenize( ':' )
                     sh label: '', script: '''
                     sed -i \'s/SED001/''' + params.p7_instance_name + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED002/''' + params.p7_instance_client + '''/g\' ./cloudformation/params/p7_default.json
@@ -92,6 +91,9 @@ pipeline {
                     sed -i \'s/SED030/''' + params.stack_name + '.' + params.dashboard_base_url + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED031/''' + params.store_dash_azure + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED032/''' + params.store_dash_aws + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED033/''' + aws_access_key_id + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED034/''' + aws_secret_access_key + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED035/''' + params.aws_region + '''/g\' ./cloudformation/params/p7_default.json
                     '''
                 }
             }
