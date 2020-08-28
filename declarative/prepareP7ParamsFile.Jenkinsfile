@@ -82,7 +82,8 @@ pipeline {
                     sed -i \'s/SED020/''' + params.config_filename + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED021/''' + params.nt_api_search_url + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED022/''' + params.nt_api_login_url + '''/g\' ./cloudformation/params/p7_default.json
-                    sed -i \'s/SED023/''' + params.enable_blinkstick + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED023/''' + params.enable_local_blinkstick + '''/g\' ./cloudformation/params/p7_default.json
+                    sed -i \'s/SED036/''' + params.enable_remote_blinkstick + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED024/''' + params.enable_slack + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED025/''' + params.enable_sumologic + '''/g\' ./cloudformation/params/p7_default.json
                     sed -i \'s/SED026/''' + params.enable_dashboard + '''/g\' ./cloudformation/params/p7_default.json
