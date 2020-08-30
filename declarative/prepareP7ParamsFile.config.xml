@@ -1,0 +1,217 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@2.39">
+  <actions>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.7.1"/>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.7.1">
+      <jobProperties/>
+      <triggers/>
+      <parameters/>
+      <options/>
+    </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
+  </actions>
+  <description>This pipeline prepares the parameters file used by CloudFormation to deploy the Protocol/7 stack.</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>3</daysToKeep>
+        <numToKeep>20</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <hudson.plugins.copyartifact.CopyArtifactPermissionProperty plugin="copyartifact@1.45">
+      <projectNameList>
+        <string>*</string>
+      </projectNameList>
+    </hudson.plugins.copyartifact.CopyArtifactPermissionProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.31">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>stack_name</name>
+          <description>The name of the Protocol/7 stack.</description>
+          <defaultValue>protocol7</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>authorized_ip</name>
+          <description>The IP address that will be granted access to the EC2 instance (SSH) and Jenkins (8080).
+Leave empty if you want Jenkins to fill that field with your current external IP.</description>
+          <defaultValue>0.0.0.0/0</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>hosted_zone_name</name>
+          <description>DNS entry pointing to the EC2 instance (22) and Jenkins (8080).</description>
+          <defaultValue>schneiderzupper.de.</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>p7_instance_name</name>
+          <description>Nickname/codename for the instance of Protocol/7 that will be deployed.</description>
+          <defaultValue>p7</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>p7_instance_client</name>
+          <description>The client being monitored by this Protocol/7 instance. While it&apos;s technically possible to monitor several customers with one instance of P7, it&apos;s much tidier to keep things separated.</description>
+          <defaultValue>pantzumatic</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>p7_instance_env</name>
+          <description>The environment (dev, test, uat, prod...) being monitored by this P7 instance.</description>
+          <defaultValue>test</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>p7_instance_project</name>
+          <description>The project being monitored by this P7 instance.</description>
+          <defaultValue>mkultra</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>azure_storage_account_name</name>
+          <description>The Microsoft Azure storage account that will be used to store the dashboard HTML files.</description>
+          <defaultValue>MyStorage</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>azure_devops_url</name>
+          <description>The URL from which your Microsoft DevOps account can be accessed.</description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>dynamodb_url</name>
+          <description>The URL used to interact with DynamoDB. The stack includes a local instance of DynamoDB that you should use unless you really know what you do.
+DO NOT APPEND http:// IN FRONT OF THE URL.</description>
+          <defaultValue>localhost:8001</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>chatbotone_data_folder</name>
+          <description>The folder used by Chat Bot One to write its data.</description>
+          <defaultValue>./cb1data/</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>dashboard_filename</name>
+          <description>The HTML file generated by Protocol/7 to be used as a dashboard (simple mode).</description>
+          <defaultValue>p7.html</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>advanced_dashboard_filename</name>
+          <description>The HTML file generated by Protocol/7 to be used as a dashboard (advanced mode).</description>
+          <defaultValue>p7adv.html</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>dashboard_base_url</name>
+          <description>The URL pointing to the HTML dashboard files.</description>
+          <defaultValue>schneiderzupper.de</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>logs_folder</name>
+          <description>The location of Protocol/7&apos;s logs.</description>
+          <defaultValue>./log/</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>log_filename</name>
+          <description>The main log file for Protocol/7.</description>
+          <defaultValue>protocol7.log</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>config_filename</name>
+          <description>The config file for Protocol/7 (do not add the file extension -- .py).</description>
+          <defaultValue>sample_config</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>enable_local_blinkstick</name>
+          <description>Enable a local Blinkstick plugged in a USB port on the Protocol/7 main server (not recommended unless you run Protocol/7 locally).
+Do *not* enable this unless you are running the Protocol/7 server on your own laptop/desktop with a BlinkStick plugged in a USB port.</description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>enable_remote_blinkstick</name>
+          <description>Enable remote Blinkstick management.
+The Protocol/7 main server will remotely drive a USB RGB BlinkStick light plugged into a USB port of your laptop/desktop.
+This is the option of choice if you are not running the Protocol/7 main server locally, but in EC2/Docker/Azure/...</description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>enable_slack</name>
+          <description>Let Protocol/7 write messages to Slack.</description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>enable_sumologic</name>
+          <description>Let Protocol/7 send its log to Sumologic.</description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>enable_dashboard</name>
+          <description>Let Protocol/7 generate a dashboard (2 HTML files hosted somewhere).</description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>store_dash_azure</name>
+          <description>Tell Protocol/7 to store its dashboard on an Azure Blob Storage instance.</description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>store_dash_aws</name>
+          <description>Tell Protocol/7 to store its dashboard on a AWS S3 bucket.</description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>aws_region</name>
+          <description>AWS region in which the stack will be created.</description>
+          <defaultValue>ap-southeast-2</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.2">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit></paramsToUseForLimit>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps@2.81">
+    <scm class="hudson.plugins.git.GitSCM" plugin="git@4.3.0">
+      <configVersion>2</configVersion>
+      <userRemoteConfigs>
+        <hudson.plugins.git.UserRemoteConfig>
+          <url>https://github.com/TME520/jenkinslab.git</url>
+          <credentialsId>c0d66b24-e928-45f3-8da2-0b3f960ca800</credentialsId>
+        </hudson.plugins.git.UserRemoteConfig>
+      </userRemoteConfigs>
+      <branches>
+        <hudson.plugins.git.BranchSpec>
+          <name>*/master</name>
+        </hudson.plugins.git.BranchSpec>
+      </branches>
+      <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+      <submoduleCfg class="list"/>
+      <extensions/>
+    </scm>
+    <scriptPath>declarative/prepareP7ParamsFile.Jenkinsfile</scriptPath>
+    <lightweight>true</lightweight>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>
